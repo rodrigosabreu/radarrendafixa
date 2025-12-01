@@ -171,6 +171,5 @@ Este projeto está sob a licença **MIT**.
 ## 👨‍💻 Autor
 
 **Rodrigo Abreu**  
-Tech Lead | Engenharia de Software | Investimentos  
-LinkedIn: https://www.linkedin.com/in/seu-perfil  
-GitHub: https://github.com/seu-usuario
+Engenharia de Software 
+LinkedIn: https://www.linkedin.com/in/rodrigosabreu
