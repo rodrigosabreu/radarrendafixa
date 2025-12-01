@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ajuda – Radar Renda Fixa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #020910;
+      --bg-card: #050d16;
+      --accent: #32ff7e;
+      --accent-soft: rgba(50, 255, 126, 0.12);
+      --text: #e5ffe9;
+      --text-muted: #7aa489;
+      --border: #1b4730;
+      --radius-lg: 16px;
+      --radius-md: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #041822 0, #020910 35%, #000000 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(50,255,126,0.09), transparent 55%),
+        radial-gradient(circle at 90% 80%, rgba(0,190,110,0.15), transparent 60%);
+      z-index: -1;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 960px;
+    }
+
+    header {
+      margin-bottom: 24px;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: radial-gradient(circle, var(--accent) 0, #0c3b26 55%, transparent 70%);
+      box-shadow: 0 0 18px rgba(50, 255, 126, 0.8);
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .card {
+      background: linear-gradient(135deg, rgba(5, 20, 20, 0.9), rgba(2, 10, 10, 0.95));
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(50,255,126,0.25);
+      padding: 18px 18px 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 0 24px rgba(0, 255, 128, 0.18);
+    }
+
+    h2 {
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      font-size: 0.95rem;
+      margin: 12px 0 4px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    p {
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    ul {
+      margin: 6px 0 8px 18px;
+    }
+
+    li {
+      font-size: 0.86rem;
+      line-height: 1.4;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(50,255,126,0.4);
+      background: rgba(0,0,0,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 14px;
+    }
+
+    .badge-risk {
+      display: inline-flex;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      border: 1px solid var(--accent);
+      background: var(--accent-soft);
+      color: var(--text);
+      margin-left: 4px;
+    }
+
+    .footnote {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 10px;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 16px;
+      }
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="page">
+  <header>
+    <div class="title-row">
+      <div class="dot"></div>
+      <h1>Ajuda – Radar Renda Fixa</h1>
+    </div>
+    <p class="subtitle">
+      Esta página explica, em linguagem simples, como o Radar Renda Fixa
+      e como interpretar cada informação exibida.
+    </p>
+  </header>
+
+  <section class="card">
+    <span class="tag">Visão geral</span>
+    <h2>O que essa tela faz?</h2>
+    <p>
+      O Radar Renda Fixa é um <strong>scanner de oportunidades</strong>.
+      Você informa:
+    </p>
+    <ul>
+      <li>o valor que pretende investir;</li>
+      <li>o prazo desejado em dias;</li>
+      <li>seu perfil de risco (Conservador, Moderado ou Turbo).</li>
+    </ul>
+    <p>
+      A partir disso, o sistema simula o rendimento líquido das ofertas disponíveis (no MVP ainda são exemplos mockados),
+      calcula um <strong>score</strong> para cada título e monta um
+      <strong>ranking de oportunidades</strong> ordenado do melhor para o pior score.
+    </p>
+  </section>
+
+  <section class="card">
+    <span class="tag">Lado esquerdo</span>
+    <h2>Formulário – Parâmetros da simulação</h2>
+    <p>O bloco da esquerda é o formulário de entrada. Ele controla tudo o que aparece no ranking.</p>
+
+    <h3>1. Valor a investir (R$)</h3>
+    <p>
+      Informe aqui o valor aproximado que você pretende aplicar, por exemplo <code>1000</code>, <code>5000</code> ou <code>10000</code>.
+      Esse valor é usado para calcular o quanto você teria ao final do prazo em cada título.
+    </p>
+
+    <h3>2. Prazo em dias</h3>
+    <p>
+      Representa por quanto tempo você está disposto a deixar o dinheiro investido.
+      Exemplos comuns:
+    </p>
+    <ul>
+      <li><strong>180 dias</strong> – algo em torno de 6 meses;</li>
+      <li><strong>360 dias</strong> – cerca de 1 ano;</li>
+      <li><strong>720 dias</strong> – cerca de 2 anos.</li>
+    </ul>
+    <p>
+      O prazo influencia:
+    </p>
+    <ul>
+      <li>o imposto de renda (a tabela é regressiva, a alíquota diminui em prazos maiores);</li>
+      <li>a seleção de títulos que aparecem como mais adequados ao seu perfil.</li>
+    </ul>
+
+    <h3>3. Perfil de risco</h3>
+    <p>Define o “estilo” de investimento que você aceita:</p>
+    <ul>
+      <li>
+        <strong>Conservador</strong> – prioriza segurança, normalmente títulos com
+        <em>garantia do FGC</em> e prazos mais curtos.
+      </li>
+      <li>
+        <strong>Moderado</strong> – busca equilíbrio entre segurança e retorno, aceita prazos um pouco maiores.
+      </li>
+      <li>
+        <strong>Turbo</strong> – maximiza retorno potencial, aceitando mais risco e prazos longos.
+      </li>
+    </ul>
+    <p>
+      O sistema usa o perfil para filtrar e pontuar as ofertas, favorecendo as que combinam mais com o seu estilo.
+    </p>
+
+    <h3>4. Botão “Rodar Scanner”</h3>
+    <p>
+      Ao clicar neste botão, o front envia seus parâmetros para o backend e aguarda a resposta.
+      Se tudo der certo, a mensagem “Ranking atualizado com sucesso” aparece abaixo.
+    </p>
+    <p class="footnote">
+      Se aparecer uma mensagem de erro, normalmente é porque o backend está offline,
+      a rota de API mudou ou o formato do JSON não está compatível.
+    </p>
+  </section>
+
+  <section class="card">
+    <span class="tag">Lado direito</span>
+    <h2>Ranking de oportunidades – Como ler a tabela</h2>
+    <p>
+      O painel da direita mostra a lista de títulos simulados, já ordenados do melhor para o pior score.
+      Cada coluna tem um papel específico:
+    </p>
+
+    <h3>#</h3>
+    <p>
+      Posição no ranking. <strong>1</strong> é a oferta com melhor score para os parâmetros informados.
+    </p>
+
+    <h3>Produto</h3>
+    <p>
+      Nome do título, por exemplo:
+      <em>“CDB Banco A 120% CDI”</em> ou <em>“LCI Banco B 95% CDI”</em>, seguido do emissor (Banco A, Banco B etc).
+    </p>
+
+    <h3>Corretora</h3>
+    <p>
+      Mostra a instituição ou plataforma pela qual o título estaria sendo negociado.
+      Em versões futuras, esse campo poderá ser clicável para direcionar você à plataforma parceira.
+    </p>
+
+    <h3>Tipo</h3>
+    <p>
+      Indica a categoria do título, por exemplo:
+    </p>
+    <ul>
+      <li><strong>CDB</strong> – Certificado de Depósito Bancário;</li>
+      <li><strong>LCI</strong> – Letra de Crédito Imobiliário;</li>
+      <li><strong>LCA</strong> – Letra de Crédito do Agronegócio;</li>
+      <li><strong>Tesouro IPCA+</strong>, <strong>Tesouro Selic</strong> etc.</li>
+    </ul>
+
+    <h3>Taxa</h3>
+    <p>
+      Mostra a forma de remuneração do título:
+    </p>
+    <ul>
+      <li><strong>120,0% do CDI</strong> – rende 20% a mais do que a taxa CDI;</li>
+      <li><strong>95,0% do CDI</strong> – rende um pouco abaixo do CDI;</li>
+      <li><strong>IPCA + X%</strong> – rende a inflação (IPCA) mais uma taxa fixa ao ano;</li>
+      <li><strong>Prefixado</strong> – taxa fixa definida na compra.</li>
+    </ul>
+
+    <h3>R$ Líquido</h3>
+    <p>
+      Aqui você vê:
+    </p>
+    <ul>
+      <li><strong>valor líquido simulado</strong> ao final do prazo – já com imposto de renda descontado;</li>
+      <li>o valor investido de entrada → e a rentabilidade aproximada ao ano.</li>
+    </ul>
+    <p>
+      Exemplo: <em>“R$ 1.424,77 – R$ 1.001,00 → 13,15 % a.a.”</em>
+      significa que, investindo R$ 1.001, ao final do prazo você teria aproximadamente R$ 1.424,77 líquidos.
+    </p>
+
+    <h3>Risco</h3>
+    <p>
+      Exibe um selo de risco, como:
+      <span class="badge-risk">Baixo</span>,
+      <span class="badge-risk">Médio</span> ou
+      <span class="badge-risk">Alto</span>.
+    </p>
+    <p>
+      Essa classificação leva em conta fatores como:
+    </p>
+    <ul>
+      <li>se o título tem ou não <strong>garantia do FGC</strong>;</li>
+      <li>o prazo até o vencimento;</li>
+      <li>o tipo de emissor.</li>
+    </ul>
+
+    <h3>Score</h3>
+    <p>
+      É a pontuação final calculada pelo motor do Radar Renda Fixa.
+      Ele combina:
+    </p>
+    <ul>
+      <li>rentabilidade líquida anual;</li>
+      <li>aderência ao prazo informado;</li>
+      <li>nível de risco;</li>
+      <li>liquidez diária (quando disponível).</li>
+    </ul>
+    <p>
+      Quanto maior o score, mais “interessante” o título para os parâmetros que você escolheu.
+    </p>
+
+    <h3>Coluna “Investir”</h3>
+    <p>
+      No MVP, o link “Investir” pode apontar para uma URL de teste.
+      Em uma versão real, ele levaria você até a tela da corretora ou parceira para efetivar o investimento.
+    </p>
+
+    <p class="footnote">
+      Importante: o Radar Renda Fixa <strong>não executa investimentos</strong>.
+      Ele apenas simula e organiza as oportunidades conforme as regras internas do motor.
+    </p>
+  </section>
+
+  <section class="card">
+    <span class="tag">Boas práticas</span>
+    <h2>Limitações do MVP e próximos passos</h2>
+    <p>
+      Atualmente, o sistema utiliza dados de exemplo (mockados). Em produção, ele deve ser integrado a fontes reais
+      e reguladas de informação de investimentos, como:
+    </p>
+    <ul>
+      <li>
+        <a href="https://www.gov.br/cvm" target="_blank" rel="noopener noreferrer">
+          CVM – Comissão de Valores Mobiliários
+        </a>
+      </li>
+      <li>
+        <a href="https://www.bcb.gov.br/cidadaniafinanceira" target="_blank" rel="noopener noreferrer">
+          Banco Central – Cidadania Financeira
+        </a>
+      </li>
+      <li>
+        <a href="https://www.anbima.com.br/pt_br/autorregular/selos-e-rotulos/selo-de-investimentos.htm"
+           target="_blank" rel="noopener noreferrer">
+          ANBIMA – materiais de educação e selo de investimentos
+        </a>
+      </li>
+    </ul>
+    <p>
+      Nenhuma informação exibida na tela deve ser interpretada como recomendação personalizada de investimento.
+      A lógica de score é uma simplificação para fins de prototipação.
+    </p>
+  </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Radar Renda Fixa - MVP</title>
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+	
+	.help-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: radial-gradient(circle at top, #2bff8e, #0a4c2b);
+  color: #020a06;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  text-decoration: none;
+  box-shadow: 0 0 12px rgba(43, 255, 142, 0.7);
+  transition: transform 0.1s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  margin-top: 14px;
+}
+
+.help-button:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 0 20px rgba(43, 255, 142, 1);
+  filter: brightness(1.1);
+}
+
+.help-button:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 0 10px rgba(43, 255, 142, 0.6);
+}
+
+    :root {
+      --bg: #020910;
+      --bg-card: #050d16;
+      --bg-input: #050f1a;
+      --border: #1b4730;
+      --accent: #32ff7e;
+      --accent-soft: rgba(50, 255, 126, 0.12);
+      --text: #e5ffe9;
+      --text-muted: #7aa489;
+      --danger: #ff4d4d;
+      --shadow: 0 0 30px rgba(0, 255, 128, 0.2);
+      --radius-lg: 16px;
+      --radius-md: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #041822 0, #020910 35%, #000000 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 24px;
+    }
+
+    .glow-orbit {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(50, 255, 126, 0.09), transparent 60%),
+        radial-gradient(circle at 90% 80%, rgba(0, 180, 90, 0.12), transparent 60%);
+      z-index: -1;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .header {
+      margin-bottom: 24px;
+      text-align: left;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .logo-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: radial-gradient(circle, var(--accent) 0, #0c3b26 55%, transparent 70%);
+      box-shadow: 0 0 18px rgba(50, 255, 126, 0.8);
+    }
+
+    h1 {
+      font-size: 1.7rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .panel {
+      background: linear-gradient(135deg, rgba(5, 20, 20, 0.9), rgba(2, 10, 10, 0.95));
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(50, 255, 126, 0.22);
+      box-shadow: var(--shadow);
+      padding: 18px 18px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        120deg,
+        rgba(50, 255, 126, 0.14),
+        transparent 40%,
+        transparent 60%,
+        rgba(50, 255, 126, 0.12)
+      );
+      opacity: 0.06;
+      pointer-events: none;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .panel-title {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+    }
+
+    .pill {
+      font-size: 0.7rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(50, 255, 126, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+    }
+
+    form {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+    }
+
+    input, select {
+      background: radial-gradient(circle at top, #071822, #050f1a);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      padding: 9px 10px;
+      color: var(--text);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border 0.15s ease, box-shadow 0.15s ease, transform 0.07s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 12px rgba(50, 255, 126, 0.5);
+      transform: translateY(-1px);
+    }
+
+    input::placeholder {
+      color: rgba(200, 255, 210, 0.3);
+    }
+
+    .helper {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    button {
+      flex: 1;
+      border-radius: 999px;
+      border: none;
+      background: radial-gradient(circle at top, #2bff8e, #0a4c2b);
+      color: #020a06;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.75rem;
+      padding: 10px 14px;
+      cursor: pointer;
+      box-shadow: 0 0 18px rgba(43, 255, 142, 0.6);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px) scale(1.01);
+      filter: brightness(1.08);
+      box-shadow: 0 0 26px rgba(43, 255, 142, 0.9);
+    }
+
+    button:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: 0 0 14px rgba(43, 255, 142, 0.6);
+    }
+
+    .btn-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-pulse {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: #04160b;
+      border: 2px solid #0a4022;
+      box-shadow: 0 0 0 0 rgba(50, 255, 126, 0.7);
+      animation: pulse 1.6s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(50, 255, 126, 0.7);
+      }
+      70% {
+        transform: scale(1.8);
+        box-shadow: 0 0 0 12px rgba(50, 255, 126, 0);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(50, 255, 126, 0);
+      }
+    }
+
+    .small-text {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .status {
+      margin-top: 6px;
+      font-size: 0.75rem;
+      min-height: 18px;
+    }
+
+    .status--ok {
+      color: var(--accent);
+    }
+
+    .status--error {
+      color: var(--danger);
+    }
+
+    .results-panel {
+      position: relative;
+      z-index: 1;
+    }
+
+    .results-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .results-title {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+    }
+
+    .results-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(50, 255, 126, 0.4);
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(50, 255, 126, 0.9);
+    }
+
+    .table-wrapper {
+      margin-top: 6px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(50, 255, 126, 0.4);
+      background: rgba(2, 12, 10, 0.9);
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+
+    th, td {
+      padding: 8px 10px;
+      text-align: left;
+      border-bottom: 1px solid rgba(25, 65, 43, 0.7);
+    }
+
+    th {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      background: rgba(3, 20, 15, 0.95);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(3, 18, 13, 0.9);
+    }
+
+    tbody tr:nth-child(odd) {
+      background: rgba(3, 16, 12, 0.8);
+    }
+
+    .pill-risk {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+    }
+
+    .pill-risk--low {
+      border: 1px solid #32ff7e;
+      color: #b8ffcf;
+      background: rgba(50, 255, 126, 0.07);
+    }
+
+    .pill-risk--mid {
+      border: 1px solid #e0c14b;
+      color: #ffeeb0;
+      background: rgba(215, 191, 60, 0.08);
+    }
+
+    .pill-risk--high {
+      border: 1px solid #ff4d4d;
+      color: #ffb3b3;
+      background: rgba(255, 77, 77, 0.08);
+    }
+
+    .link-investir {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.78rem;
+    }
+
+    .link-investir:hover {
+      text-decoration: underline;
+    }
+
+    .empty-state {
+      padding: 14px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .chip-inline {
+      font-size: 0.72rem;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(50, 255, 126, 0.4);
+      background: rgba(0, 0, 0, 0.3);
+      margin-left: 4px;
+    }
+
+    @media (max-width: 860px) {
+      .layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 16px;
+      }
+      .panel {
+        padding: 14px;
+      }
+      h1 {
+        font-size: 1.4rem;
+      }
+      .subtitle {
+        font-size: 0.8rem;
+      }
+      th, td {
+        padding: 6px 8px;
+      }
+      .results-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="glow-orbit"></div>
+
+<div class="app">
+  <header class="header">
+    <div class="title-row">
+      <div class="logo-dot"></div>
+      <h1>Radar Renda Fixa</h1>
+	  
+    </div>
+    <p class="subtitle">
+      MVP – escaneando o mercado para encontrar as melhores oportunidades de renda fixa de acordo com o seu perfil.
+    </p>
+  </header>
+
+  <main class="layout">
+    <!-- Painel de entrada -->
+    <section class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Formulário</span>
+        <span class="pill">Renda Fixa</span>
+      </div>
+
+      <form id="ranking-form">
+        <div class="field">
+          <label for="valor">Valor a investir (R$)</label>
+          <input
+            type="number"
+            id="valor"
+            name="valor"
+            min="1"
+            step="100"
+            placeholder="Ex: 10000"
+            required
+          />
+          <span class="helper">Use um valor aproximado que você pretende investir.</span>
+        </div>
+
+        <div class="field">
+          <label for="prazo">Prazo em dias</label>
+          <input
+            type="number"
+            id="prazo"
+            name="prazo"
+            min="30"
+            step="30"
+            placeholder="Ex: 720"
+            required
+          />
+          <span class="helper">Informe o horizonte de tempo desejado (ex.: 360, 720).</span>
+        </div>
+
+        <div class="field">
+          <label for="perfil">Perfil de risco</label>
+          <select id="perfil" name="perfil" required>
+            <option value="Conservador">Conservador</option>
+            <option value="Moderado">Moderado</option>
+            <option value="Turbo">Turbo</option>
+          </select>
+          <span class="helper">
+            • Conservador: foco em segurança.<br />
+            • Moderado: equilíbrio entre risco e retorno.<br />
+            • Turbo: prioriza retorno, aceitando mais risco.
+          </span>
+        </div>
+
+        <div class="actions">
+          <button type="submit">
+            <span class="btn-pulse"></span>
+            <span class="btn-label">Rodar Scanner</span>
+          </button>
+        </div>
+
+        <div id="status" class="status"></div>
+
+        <p class="small-text">
+          Este é um protótipo. Os dados atuais são apenas exemplos mockados para testar a lógica de ranking.
+        </p>
+		
+		  <a href="ajuda.html" class="help-button" target="_blank" rel="noopener noreferrer">
+  ❔ Ajuda
+</a>
+      </form>
+    </section>
+
+    <!-- Painel de resultados -->
+    <section class="panel results-panel">
+      <div class="results-header-row">
+        <div>
+          <div class="results-title">Ranking de oportunidades</div>
+          <div class="results-meta">
+            Resultados ordenados por score (rentabilidade x prazo x risco).
+          </div>
+        </div>
+        <div>
+          <span class="badge">
+            <span class="badge-dot"></span>
+            Engine Ativa
+          </span>
+        </div>
+      </div>
+
+      <div class="table-wrapper" id="results-wrapper">
+        <div class="empty-state" id="empty-state">
+          Nenhuma simulação rodada ainda.<br />
+          Preencha os parâmetros à esquerda e clique em <strong>Rodar Scanner</strong>.
+        </div>
+        <table id="results-table" style="display:none;">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Produto</th>
+            <th>Corretora</th>
+            <th>Tipo</th>
+            <th>Taxa</th>
+            <th>R$ Líquido</th>
+            <th>Risco</th>
+            <th>Score</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody id="results-body">
+          <!-- Linhas inseridas via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+  const form = document.getElementById("ranking-form");
+  const statusEl = document.getElementById("status");
+  const resultsTable = document.getElementById("results-table");
+  const resultsBody = document.getElementById("results-body");
+  const emptyState = document.getElementById("empty-state");
+
+  function formatCurrency(value) {
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL"
+    }).format(value);
+  }
+
+  function formatPercent(value) {
+    return (value * 100).toFixed(2).replace(".", ",") + " %";
+  }
+
+  function mapRiskPill(nivelRisco) {
+    const risk = (nivelRisco || "").toLowerCase();
+    if (risk === "baixo") return { cls: "pill-risk pill-risk--low", label: "Baixo" };
+    if (risk === "medio") return { cls: "pill-risk pill-risk--mid", label: "Médio" };
+    if (risk === "alto") return { cls: "pill-risk pill-risk--high", label: "Alto" };
+    return { cls: "pill-risk pill-risk--mid", label: nivelRisco || "N/D" };
+  }
+
+  function mapTipoProduto(tipo) {
+    if (!tipo) return "—";
+    switch (tipo.toLowerCase()) {
+      case "cdb": return "CDB";
+      case "lci": return "LCI";
+      case "lca": return "LCA";
+      case "tesouroprefixado": return "Tesouro Prefixado";
+      case "tesouroselic": return "Tesouro Selic";
+      case "tesouroipca": return "Tesouro IPCA+";
+      case "debenture": return "Debênture";
+      default: return tipo;
+    }
+  }
+
+  function mapTaxaBruta(oferta) {
+    // taxaBruta = taxaPrincipal (já vem do backend)
+    const taxa = oferta.taxaBruta;
+    if (oferta.indexador && oferta.indexador.toLowerCase() === "cdi") {
+      return (taxa * 100).toFixed(1).replace(".", ",") + " % do CDI";
+    }
+    if (oferta.indexador && oferta.indexador.toLowerCase() === "ipca") {
+      const adicional = oferta.taxaBruta; // simplificado
+      return "IPCA + " + (adicional * 100).toFixed(2).replace(".", ",") + " %";
+    }
+    return (taxa * 100).toFixed(2).replace(".", ",") + " % a.a.";
+  }
+
+  function setStatus(message, kind = "ok") {
+    statusEl.textContent = message || "";
+    statusEl.className = "status " + (kind === "error" ? "status--error" : "status--ok");
+  }
+
+  function clearResults() {
+    resultsBody.innerHTML = "";
+    resultsTable.style.display = "none";
+    emptyState.style.display = "block";
+  }
+
+  async function callApi(payload) {
+    // Se o front estiver sendo servido pela mesma origem do backend,
+    // basta usar caminho relativo:
+    const url = "http://localhost:50569/ranking-renda-fixa";
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error("Erro HTTP " + response.status + ": " + text);
+    }
+
+    return response.json();
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    clearResults();
+
+    const valor = parseFloat(document.getElementById("valor").value);
+    const prazoEmDias = parseInt(document.getElementById("prazo").value, 10);
+    const perfil = document.getElementById("perfil").value;
+
+    if (isNaN(valor) || isNaN(prazoEmDias)) {
+      setStatus("Preencha valor e prazo corretamente.", "error");
+      return;
+    }
+
+    const payload = {
+      valor,
+      prazoEmDias,
+      perfil // "Conservador" | "Moderado" | "Turbo"
+      // Se seu backend NÃO estiver com JsonStringEnumConverter,
+      // troque esta linha por: perfil: 0 / 1 / 2 manualmente.
+    };
+
+    try {
+      setStatus("Consultando o motor de ranking...", "ok");
+
+      const data = await callApi(payload);
+
+      if (!data || !Array.isArray(data.ofertas) || data.ofertas.length === 0) {
+        setStatus("Nenhuma oferta encontrada para os parâmetros informados.", "error");
+        return;
+      }
+
+      emptyState.style.display = "none";
+      resultsTable.style.display = "table";
+
+      data.ofertas.forEach((oferta, index) => {
+        const tr = document.createElement("tr");
+
+        const posTd = document.createElement("td");
+        posTd.textContent = index + 1;
+
+        const produtoTd = document.createElement("td");
+        produtoTd.innerHTML =
+          `<strong>${oferta.nomeProduto}</strong><br/><span class="small-text">${oferta.emissor}</span>`;
+
+        const corretoraTd = document.createElement("td");
+        corretoraTd.textContent = oferta.corretora || "—";
+
+        const tipoTd = document.createElement("td");
+        tipoTd.textContent = mapTipoProduto(oferta.tipo);
+
+        const taxaTd = document.createElement("td");
+        taxaTd.textContent = mapTaxaBruta(oferta);
+
+        const liquidoTd = document.createElement("td");
+        liquidoTd.innerHTML =
+          `<strong>${formatCurrency(oferta.valorLiquido)}</strong><br/>` +
+          `<span class="small-text">${formatCurrency(oferta.valorAplicado)} → ${(
+            oferta.rentabilidadeLiquidaPercentAnual || 0
+          ).toFixed(2).replace(".", ",")} % a.a.</span>`;
+
+        const riscoTd = document.createElement("td");
+        const risk = mapRiskPill(oferta.nivelRisco);
+        riscoTd.innerHTML = `<span class="${risk.cls}">${risk.label}</span>`;
+
+        const scoreTd = document.createElement("td");
+        scoreTd.textContent = oferta.score.toFixed(3);
+
+        const linkTd = document.createElement("td");
+        if (oferta.urlInvestir) {
+          const a = document.createElement("a");
+          a.href = oferta.urlInvestir;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.className = "link-investir";
+          a.textContent = "Investir";
+          linkTd.appendChild(a);
+        } else {
+          linkTd.textContent = "—";
+        }
+
+        tr.appendChild(posTd);
+        tr.appendChild(produtoTd);
+        tr.appendChild(corretoraTd);
+        tr.appendChild(tipoTd);
+        tr.appendChild(taxaTd);
+        tr.appendChild(liquidoTd);
+        tr.appendChild(riscoTd);
+        tr.appendChild(scoreTd);
+        tr.appendChild(linkTd);
+
+        resultsBody.appendChild(tr);
+      });
+
+      setStatus("Ranking atualizado com sucesso.");
+    } catch (err) {
+      console.error(err);
+      setStatus("Falha ao consultar o backend: " + (err.message || err), "error");
+    }
+  });
+</script>
+
+</body>
+</html>
