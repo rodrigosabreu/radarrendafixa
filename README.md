@@ -1,47 +1,50 @@
 # 💹 Radar Renda Fixa – MVP
 
-O **Radar Renda Fixa** é um MVP criado para testar um conceito simples e poderoso:
+O **Radar Renda Fixa** é um MVP criado para demonstrar como um motor de ranking pode identificar as melhores oportunidades de renda fixa com base no prazo, perfil de risco e rentabilidade líquida simulada.
 
-> Escanear ofertas de renda fixa e gerar um *ranking inteligente* com base no perfil do investidor, rentabilidade líquida e risco do título.
+## 🚀 Tecnologias Utilizadas
 
-Esse projeto foi desenvolvido rapidamente como um **hackathon pessoal**, unindo backend .NET 8, frontend estático e regras de negócio reais simplificadas.
+### Backend (.NET 8)
+- Minimal API
+- Simulação de rentabilidade
+- Tabela regressiva de IR
+- CORS
+- Servidor estático
 
----
-
-## 🚀 Tecnologias utilizadas
-
-### **Backend**
-- .NET 8 (Minimal API)
-- Injeção de dependência nativa
-- Simulação de rentabilidade:
-  - CDI
-  - IPCA
-  - Prefixado
-- Score baseado em:
-  - retorno líquido
-  - aderência ao prazo
-  - risco
-  - liquidez
-- CORS habilitado
-- Servidor estático integrado (wwwroot)
-
-### **Frontend**
-- HTML + CSS + JavaScript (fetch API)
+### Frontend
+- HTML, CSS, JavaScript
 - Tema futurista verde
-- Tabela dinâmica com ranking em tempo real
-- Página de ajuda (`ajuda.html`)
 
----
+## 📂 Estrutura
 
-## 📸 Prints da Interface
+RadarRendaFixa/
+ ├── Contracts/
+ ├── Domain/
+ ├── Repositories/
+ ├── Services/
+ ├── wwwroot/
+ │    ├── index.html
+ │    └── ajuda.html
+ ├── Program.cs
+ └── README.md
 
-### **Tela principal**
-_(cole aqui a imagem do seu print da tela principal)_
+## 🧪 Executar
 
-### **Tela de ajuda**
-_(cole aqui o print da página ajuda.html)_
+dotnet run
 
----
+Acesse:
+http://localhost:50569/
 
-## 📂 Estrutura do Projeto
+## 📡 API
 
+POST /ranking-renda-fixa
+
+{
+  "valor": 10000,
+  "prazoEmDias": 720,
+  "perfil": "Conservador"
+}
+
+## 👨‍💻 Autor
+
+Rodrigo Abreu
