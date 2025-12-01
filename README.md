@@ -60,7 +60,7 @@ RadarRendaFixa/
 
 ### 1. Clonar o repositório:
 ```bash
-git clone https://github.com/seu-usuario/seu-repo.git
+git clone https://github.com/rodrigosabreu/radarrendafixa.git
 cd RadarRendaFixa
 ```
 
